@@ -12,6 +12,7 @@ final class Game
     private function __construct(
         public readonly Id $id,
         public readonly GameStatus $status,
+        public readonly Board $board,
         public readonly Player $nextPlayer,
         public readonly Player $winner,
     ) {
@@ -25,6 +26,7 @@ final class Game
         return new self(
             new Id($gameData['id']),
             GameStatus::from($gameData['status']),
+            Board::fromStatus($gameData['board']),
             Player::from($gameData['nextPlayer']),
             Player::from($gameData['winner'])
         );

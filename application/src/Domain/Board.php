@@ -6,9 +6,18 @@ namespace TicTacToe\Domain;
 
 final class Board
 {
+    private const DEFAULT = '000000000';
+
     private function __construct(
         public string $status,
     ) {
+    }
+
+    public static function default(): self
+    {
+        return new self(
+            self::DEFAULT,
+        );
     }
 
     public static function fromStatus(string $status): self
