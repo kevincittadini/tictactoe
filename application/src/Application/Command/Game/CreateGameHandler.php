@@ -14,6 +14,5 @@ class CreateGameHandler implements CommandHandler
 
     public function __invoke(CreateGame $command): void
     {
-
     }
 }
