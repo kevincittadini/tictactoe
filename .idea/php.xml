@@ -113,6 +113,7 @@
       <path value="$PROJECT_DIR$/application/vendor/webmozart/assert" />
       <path value="$PROJECT_DIR$/application/vendor/webmozart/path-util" />
       <path value="$PROJECT_DIR$/application/vendor/dnoegel/php-xdg-base-dir" />
+      <path value="$PROJECT_DIR$/application/vendor/phpspec/prophecy" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

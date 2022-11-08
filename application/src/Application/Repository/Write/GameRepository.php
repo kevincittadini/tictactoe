@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TicTacToe\Application\Repository\Write;
 
 use TicTacToe\Domain\Game;
