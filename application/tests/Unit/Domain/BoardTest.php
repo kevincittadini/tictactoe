@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TicTacToe\Tests\Domain;
+namespace TicTacToe\Tests\Unit\Domain;
 
 use PHPUnit\Framework\TestCase;
 use TicTacToe\Domain\Board;

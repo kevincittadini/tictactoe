@@ -113,6 +113,7 @@
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/webmozart/path-util" />
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/dnoegel/php-xdg-base-dir" />
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/phpspec/prophecy" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/phpspec/prophecy-phpunit" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
