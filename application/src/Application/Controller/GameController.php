@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace TicTacToe\Application\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use TicTacToe\Application\Repository\Write\GameRepository;
@@ -18,7 +17,7 @@ final class GameController
     }
 
     #[Route(path: '/api/game', methods: ['POST'])]
-    public function createAction(Request $request): Response
+    public function createAction(): Response
     {
         return new JsonResponse();
     }

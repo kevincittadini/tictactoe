@@ -32,6 +32,17 @@ final class Game
         );
     }
 
+    public static function default(Id $id): self
+    {
+        return new self(
+            $id,
+            GameStatus::OPEN,
+            Board::default(),
+            Player::ONE,
+            Player::NONE,
+        );
+    }
+
     public function hasBeenWon(): bool
     {
         foreach (Board::WINNING_CONDITIONS as $winningCondition) {

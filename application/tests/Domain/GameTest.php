@@ -9,6 +9,7 @@ use Ramsey\Uuid\Uuid;
 use TicTacToe\Domain\Board;
 use TicTacToe\Domain\Game;
 use TicTacToe\Domain\GameStatus;
+use TicTacToe\Domain\Id;
 use TicTacToe\Domain\Player;
 
 class GameTest extends TestCase
@@ -30,6 +31,18 @@ class GameTest extends TestCase
         $this->assertSame($data['board'], $game->board->status);
         $this->assertSame($data['nextPlayer'], $game->nextPlayer->value);
         $this->assertSame($data['winner'], $game->winner->value);
+    }
+
+    public function test_it_creates_a_default_game(): void
+    {
+        $id = new Id(Uuid::uuid4()->toString());
+
+        $game = Game::default($id);
+
+        $this->assertEquals(GameStatus::OPEN, $game->status);
+        $this->assertEquals(Board::default(), $game->board);
+        $this->assertEquals(Player::ONE, $game->nextPlayer);
+        $this->assertEquals(Player::NONE, $game->winner);
     }
 
     /** @dataProvider winnedGamesDataProvider */
