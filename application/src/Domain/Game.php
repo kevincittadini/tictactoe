@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace TicTacToe\Domain;
 
 /**
- * @psalm-type GameArray = array{id: int|string, status: string, nextPlayer: int, winner: int}
+ * @psalm-type GameArray = array{id: int|string, status: string, board: string, nextPlayer: string, winner: string}
  */
 final class Game
 {
@@ -28,14 +28,14 @@ final class Game
             GameStatus::from($gameData['status']),
             Board::fromStatus($gameData['board']),
             Player::from($gameData['nextPlayer']),
-            Player::from($gameData['winner'])
+            Player::from($gameData['winner']),
         );
     }
 
     public function hasBeenWon(): bool
     {
         foreach (Board::WINNING_CONDITIONS as $winningCondition) {
-            if (preg_match('/'.$winningCondition.'/', $this->board->status) === 1) {
+            if (1 === preg_match('/'.$winningCondition.'/', $this->board->status)) {
                 return true;
             }
         }

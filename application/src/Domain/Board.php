@@ -8,7 +8,7 @@ final class Board
 {
     private const DEFAULT = '000000000';
 
-    const WINNING_CONDITIONS = [
+    public const WINNING_CONDITIONS = [
         // Rows
         '111......',
         '...111...',
