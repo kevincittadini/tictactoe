@@ -9,5 +9,5 @@ use TicTacToe\Domain\Id;
 
 interface GameRepository
 {
-    public function get(Id $id): Game;
+    public function get(Id $id): Game|null;
 }
