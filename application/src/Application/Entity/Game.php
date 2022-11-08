@@ -3,7 +3,6 @@
 namespace TicTacToe\Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use TicTacToe\Application\Repository\GameRepository;
 
 #[ORM\Entity]
 class Game
