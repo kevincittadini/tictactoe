@@ -10,35 +10,34 @@ use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Response;
+use TicTacToe\Application\Command\Game\CreateGame;
 use TicTacToe\Application\Controller\GameController;
-use TicTacToe\Application\Repository\Write\GameRepository as WriteGameRepository;
+use TicTacToe\Application\Service\CommandHandlerManagerInterface;
 use TicTacToe\Domain\Board;
 use TicTacToe\Domain\Game;
-use TicTacToe\Domain\GameStatus;
-use TicTacToe\Domain\Id;
-use TicTacToe\Domain\Player;
+
 
 class GameControllerTest extends TestCase
 {
     use ProphecyTrait;
 
-    private WriteGameRepository|ObjectProphecy $writeGameRepository;
+    private ObjectProphecy $commandHandlerManager;
     private GameController $controller;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->writeGameRepository = $this->prophesize(WriteGameRepository::class);
+        $this->commandHandlerManager = $this->prophesize(CommandHandlerManagerInterface::class);
 
         $this->controller = new GameController(
-            $this->writeGameRepository->reveal()
+            $this->commandHandlerManager->reveal()
         );
     }
 
     public function test_creates_new_game(): void
     {
-        $this->writeGameRepository->store(Argument::type(Game::class))->shouldBeCalled();
+        $this->commandHandlerManager->handle(Argument::type(CreateGame::class))->shouldBeCalled();
         $response = $this->responseToArray($this->controller->createAction());
 
         $this->assertTrue(Uuid::isValid($response['gameId']));

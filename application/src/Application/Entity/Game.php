@@ -30,6 +30,11 @@ class Game
         return $this->id;
     }
 
+    public function setId(string $id): void
+    {
+        $this->id = $id;
+    }
+
     public function getStatus(): string
     {
         return $this->status;
