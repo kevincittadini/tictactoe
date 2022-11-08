@@ -99,6 +99,19 @@
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/friendsofphp/php-cs-fixer" />
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/symfony/process" />
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/symfony/options-resolver" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/felixfbecker/language-server-protocol" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/felixfbecker/advanced-json-rpc" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/openlss/lib-array2xml" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/vimeo/psalm" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/phpdocumentor/reflection-docblock" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/phpdocumentor/reflection-common" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/phpdocumentor/type-resolver" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/netresearch/jsonmapper" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/amphp/amp" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/amphp/byte-stream" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/webmozart/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/webmozart/path-util" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/dnoegel/php-xdg-base-dir" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
