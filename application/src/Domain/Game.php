@@ -31,4 +31,15 @@ final class Game
             Player::from($gameData['winner'])
         );
     }
+
+    public function hasBeenWon(): bool
+    {
+        foreach (Board::WINNING_CONDITIONS as $winningCondition) {
+            if (preg_match('/'.$winningCondition.'/', $this->board->status) === 1) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

@@ -8,6 +8,33 @@ final class Board
 {
     private const DEFAULT = '000000000';
 
+    const WINNING_CONDITIONS = [
+        // Rows
+        '111......',
+        '...111...',
+        '......111',
+
+        '222......',
+        '...222...',
+        '......222',
+
+        // Columns
+        '1..1..1..',
+        '.1..1..1.',
+        '..1..1..1',
+
+        '2..2..2..',
+        '.2..2..2.',
+        '..2..2..2',
+
+        // Diagonals
+        '1...1...1',
+        '..1.1.1..',
+
+        '2...2...2',
+        '..2.2.2..',
+    ];
+
     private function __construct(
         public string $status,
     ) {
@@ -31,6 +58,11 @@ final class Board
 
     private static function isValid(string $status): bool
     {
-        return 1 === preg_match('/[0-2]{9}/', $status);
+        $validPlayers = sprintf(
+            '(%s|%s|%s|%s)',
+            Player::NONE->value, Player::ONE->value, Player::TWO->value, Player::ANY->value
+        );
+
+        return 1 === preg_match('/['.$validPlayers.']{9}/', $status);
     }
 }

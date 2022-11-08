@@ -31,4 +31,35 @@ class GameTest extends TestCase
         $this->assertSame($data['nextPlayer'], $game->nextPlayer->value);
         $this->assertSame($data['winner'], $game->winner->value);
     }
+
+    /** @dataProvider winnedGamesDataProvider */
+    public function test_if_game_has_a_won_board(string $board, bool $expectedWonStatus): void
+    {
+        $data = [
+            'id' => Uuid::uuid4()->toString(),
+            'status' => GameStatus::OPEN->value,
+            'board' => $board,
+            'nextPlayer' => Player::ONE->value,
+            'winner' => Player::NONE->value,
+        ];
+
+        $game = Game::fromArray($data);
+
+        $this->assertSame($expectedWonStatus, $game->hasBeenWon());
+    }
+
+    public function winnedGamesDataProvider(): array
+    {
+        return [
+            [Board::default()->status, false],
+            [Board::WINNING_CONDITIONS[0], true],
+            [Board::WINNING_CONDITIONS[5], true],
+            ['112221121', false],
+            ['111221112', true],
+            ['222112221', true],
+            ['122212221', true],
+            ['221212122', true],
+            ['221202122', false],
+        ];
+    }
 }
