@@ -8,7 +8,6 @@ final class Id implements \TicTacToe\Domain\Id
 {
     public function __construct(
         public readonly int|string|UuidInterface $id
-    )
-    {
+    ) {
     }
 }

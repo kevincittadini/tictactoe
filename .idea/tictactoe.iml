@@ -96,6 +96,9 @@
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/ramsey/collection" />
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/ramsey/uuid" />
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/brick/math" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/friendsofphp/php-cs-fixer" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/symfony/process" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/symfony/options-resolver" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

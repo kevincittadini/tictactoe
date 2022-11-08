@@ -11,9 +11,7 @@ final class Game
         public readonly GameStatus $status,
         public readonly Player $nextPlayer,
         public readonly Player $winner,
-    )
-    {
-
+    ) {
     }
 
     public static function fromArray(array $gameData): self
