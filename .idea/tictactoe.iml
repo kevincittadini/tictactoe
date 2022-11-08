@@ -93,6 +93,9 @@
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/psr/event-dispatcher" />
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/symfony/proxy-manager-bridge" />
       <excludeFolder url="file://$MODULE_DIR$/application/vendor/friendsofphp/proxy-manager-lts" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/ramsey/collection" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/ramsey/uuid" />
+      <excludeFolder url="file://$MODULE_DIR$/application/vendor/brick/math" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
