@@ -11,9 +11,7 @@ final class MoveHandler implements CommandHandler
 {
     public function __construct(
         private readonly ReadGameRepository $readGameRepository,
-    )
-    {
-
+    ) {
     }
 
     public function __invoke(Move $move): void
