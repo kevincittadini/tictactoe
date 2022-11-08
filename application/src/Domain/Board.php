@@ -14,7 +14,7 @@ final class Board
     public static function fromStatus(string $status): self
     {
         if (!self::isValid($status)) {
-            throw new \DomainException("Invalid board status.");
+            throw new \DomainException('Invalid board status.');
         }
 
         return new self($status);
@@ -22,6 +22,6 @@ final class Board
 
     private static function isValid(string $status): bool
     {
-        return preg_match("/[0-2]{9}/", $status) === 1;
+        return 1 === preg_match('/[0-2]{9}/', $status);
     }
 }
