@@ -1,0 +1,9 @@
+<?php
+
+declare(strict_types=1);
+
+namespace TicTacToe\Application\Command;
+
+interface Command
+{
+}
