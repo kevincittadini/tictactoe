@@ -30,12 +30,12 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "TicTacToe\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "TicTacToe\\Tests\\": "tests/"
         }
     },
     "replace": {
