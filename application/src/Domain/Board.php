@@ -42,7 +42,7 @@ final class Board
 
     public function moveCanBeDoneInCell(BoardCell $boardCell): bool
     {
-        return $this->status[$boardCell->cellCoordinate - 1] === '0';
+        return '0' === $this->status[$boardCell->cellCoordinate - 1];
     }
 
     public static function default(): self

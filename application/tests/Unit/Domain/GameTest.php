@@ -61,6 +61,22 @@ class GameTest extends TestCase
         $this->assertSame($expectedWonStatus, $game->hasBeenWon());
     }
 
+    /** @dataProvider staleGamesDataProvider */
+    public function test_if_game_has_a_stale_board(string $board, bool $expectedStaleStatus): void
+    {
+        $data = [
+            'id' => Uuid::uuid4()->toString(),
+            'status' => GameStatus::CLOSE->value,
+            'board' => $board,
+            'nextPlayer' => Player::ONE->value,
+            'winner' => Player::NONE->value,
+        ];
+
+        $game = Game::fromArray($data);
+
+        $this->assertSame($expectedStaleStatus, $game->isStale());
+    }
+
     public function winnedGamesDataProvider(): array
     {
         return [
@@ -73,6 +89,36 @@ class GameTest extends TestCase
             ['122212221', true],
             ['221212122', true],
             ['221202122', false],
+        ];
+    }
+
+    public function staleGamesDataProvider(): array
+    {
+        return [
+            [Board::default()->status, false],
+            [Board::WINNING_CONDITIONS[0], false],
+            [Board::WINNING_CONDITIONS[1], false],
+            [Board::WINNING_CONDITIONS[2], false],
+            [Board::WINNING_CONDITIONS[3], false],
+            [Board::WINNING_CONDITIONS[4], false],
+            [Board::WINNING_CONDITIONS[5], false],
+            [Board::WINNING_CONDITIONS[6], false],
+            [Board::WINNING_CONDITIONS[7], false],
+            [Board::WINNING_CONDITIONS[8], false],
+            [Board::WINNING_CONDITIONS[9], false],
+            [Board::WINNING_CONDITIONS[10], false],
+            [Board::WINNING_CONDITIONS[11], false],
+            [Board::WINNING_CONDITIONS[12], false],
+            [Board::WINNING_CONDITIONS[13], false],
+            [Board::WINNING_CONDITIONS[14], false],
+            [Board::WINNING_CONDITIONS[15], false],
+            ['112221121', true],
+            ['111221112', false],
+            ['222112221', false],
+            ['122212221', false],
+            ['221212122', false],
+            ['221202122', false],
+            ['212211122', true],
         ];
     }
 }

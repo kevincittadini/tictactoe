@@ -53,4 +53,9 @@ final class Game
 
         return false;
     }
+
+    public function isStale(): bool
+    {
+        return 1 === preg_match('/[1-2]{9}/', $this->board->status) && !$this->hasBeenWon();
+    }
 }
