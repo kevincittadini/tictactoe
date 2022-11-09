@@ -169,4 +169,37 @@ class MoveHandlerTest extends TestCase
 
         $this->assertEquals($expectedNewGameState, $actualNewGameState);
     }
+
+    public function test_it_handles_a_winning_game(): void
+    {
+        $gameId = new Id(2);
+        $game = Game::fromArray([
+            'id' => $gameId->toString(),
+            'status' => GameStatus::OPEN->value,
+            'board' => Board::fromStatus('220112121')->status,
+            'nextPlayer' => Player::TWO->value,
+            'winner' => Player::NONE->value,
+        ]);
+
+        $this->readRepository->get($gameId)->willReturn($game)->shouldBeCalled();
+
+        $handler = new MoveHandler($this->readRepository->reveal(), $this->writeRepository->reveal());
+        $move = new Move(
+            $gameId,
+            Player::TWO,
+            BoardCell::withCoordinate(3)
+        );
+
+        $expectedNewGameState = Game::fromArray([
+            'id' => $gameId->toString(),
+            'status' => GameStatus::CLOSE->value,
+            'board' => Board::fromStatus('222112121')->status,
+            'nextPlayer' => Player::NONE->value,
+            'winner' => Player::TWO->value,
+        ]);
+
+        $actualNewGameState = $handler($move);
+
+        $this->assertEquals($expectedNewGameState, $actualNewGameState);
+    }
 }

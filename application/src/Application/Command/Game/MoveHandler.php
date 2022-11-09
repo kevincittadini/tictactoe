@@ -12,6 +12,9 @@ use TicTacToe\Domain\Game;
 use TicTacToe\Domain\GameStatus;
 use TicTacToe\Domain\Player;
 
+/**
+ * @psalm-type GameArray = array{id: int|string, status: string, board: string, nextPlayer: string, winner: string}
+ */
 final class MoveHandler implements CommandHandler
 {
     public function __construct(
@@ -44,26 +47,30 @@ final class MoveHandler implements CommandHandler
             throw new \DomainException(sprintf('Player %s is the next to move.', $game->nextPlayer->value));
         }
 
-        $game = $this->doMove($game, $move);
+        $gameData = $this->doMove($game, $move);
 
-        return $game;
+        return Game::fromArray($gameData);
     }
 
-    private function doMove(Game $game, Move $move): Game
+    /** @return GameArray */
+    private function doMove(Game $game, Move $move): array
     {
         $newBoard = $this->getNewBoardFromMove($game, $move);
         $newGameStatus = $newBoard->isInWinningCondition() || $newBoard->isInStaleCondition() ? GameStatus::CLOSE : GameStatus::OPEN;
-        $nextPlayer = $move->player === Player::ONE ? Player::TWO : Player::ONE;
 
-        $newGameData = [
+        $winner = $newBoard->isInWinningCondition() ? $move->player : Player::NONE;
+        $nextPlayer = Player::ONE === $move->player ? Player::TWO : Player::ONE;
+        if (GameStatus::CLOSE === $newGameStatus) {
+            $nextPlayer = Player::NONE;
+        }
+
+        return [
             'id' => $game->id->toString(),
             'status' => $newGameStatus->value,
             'board' => $newBoard->status,
             'nextPlayer' => $nextPlayer->value,
-            'winner' => $game->winner->value,
+            'winner' => $winner->value,
         ];
-
-        return Game::fromArray($newGameData);
     }
 
     private function getNewBoardFromMove(Game $game, Move $move): Board
