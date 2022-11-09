@@ -45,39 +45,19 @@ class GameTest extends TestCase
         $this->assertEquals(Player::NONE, $game->winner);
     }
 
-    /** @dataProvider winnedGamesDataProvider */
-    public function test_if_game_has_a_won_board(string $board, bool $expectedWonStatus): void
+    /** @dataProvider winnedConditionsDataProvider */
+    public function test_if_game_has_a_won_board(string $boardStatus, bool $expectedWonStatus): void
     {
-        $data = [
-            'id' => Uuid::uuid4()->toString(),
-            'status' => GameStatus::OPEN->value,
-            'board' => $board,
-            'nextPlayer' => Player::ONE->value,
-            'winner' => Player::NONE->value,
-        ];
-
-        $game = Game::fromArray($data);
-
-        $this->assertSame($expectedWonStatus, $game->hasBeenWon());
+        $this->assertSame($expectedWonStatus, Board::fromStatus($boardStatus)->isInWinningCondition());
     }
 
-    /** @dataProvider staleGamesDataProvider */
-    public function test_if_game_has_a_stale_board(string $board, bool $expectedStaleStatus): void
+    /** @dataProvider staleConditionsDataProvider */
+    public function test_if_game_has_a_stale_board(string $boardStatus, bool $expectedStaleStatus): void
     {
-        $data = [
-            'id' => Uuid::uuid4()->toString(),
-            'status' => GameStatus::CLOSE->value,
-            'board' => $board,
-            'nextPlayer' => Player::ONE->value,
-            'winner' => Player::NONE->value,
-        ];
-
-        $game = Game::fromArray($data);
-
-        $this->assertSame($expectedStaleStatus, $game->isStale());
+        $this->assertSame($expectedStaleStatus, Board::fromStatus($boardStatus)->isInStaleCondition());
     }
 
-    public function winnedGamesDataProvider(): array
+    public function winnedConditionsDataProvider(): array
     {
         return [
             [Board::default()->status, false],
@@ -92,7 +72,7 @@ class GameTest extends TestCase
         ];
     }
 
-    public function staleGamesDataProvider(): array
+    public function staleConditionsDataProvider(): array
     {
         return [
             [Board::default()->status, false],

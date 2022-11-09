@@ -7,8 +7,10 @@ namespace TicTacToe\Application\Command\Game;
 use TicTacToe\Application\Command\CommandHandler;
 use TicTacToe\Application\Repository\Read\GameRepository as ReadGameRepository;
 use TicTacToe\Application\Repository\Write\GameRepository as WriteGameRepository;
+use TicTacToe\Domain\Board;
 use TicTacToe\Domain\Game;
 use TicTacToe\Domain\GameStatus;
+use TicTacToe\Domain\Player;
 
 final class MoveHandler implements CommandHandler
 {
@@ -42,14 +44,33 @@ final class MoveHandler implements CommandHandler
             throw new \DomainException(sprintf('Player %s is the next to move.', $game->nextPlayer->value));
         }
 
-//        $newGameState = [
-//            'id' => $game->id->toString(),
-//            'status' =>
-//        ];
-//
-//        $newGameInstance = Game::fromArray($newGameState);
-//
-//        return $newGameInstance;
+        $game = $this->doMove($game, $move);
+
         return $game;
+    }
+
+    private function doMove(Game $game, Move $move): Game
+    {
+        $newBoard = $this->getNewBoardFromMove($game, $move);
+        $newGameStatus = $newBoard->isInWinningCondition() || $newBoard->isInStaleCondition() ? GameStatus::CLOSE : GameStatus::OPEN;
+        $nextPlayer = $move->player === Player::ONE ? Player::TWO : Player::ONE;
+
+        $newGameData = [
+            'id' => $game->id->toString(),
+            'status' => $newGameStatus->value,
+            'board' => $newBoard->status,
+            'nextPlayer' => $nextPlayer->value,
+            'winner' => $game->winner->value,
+        ];
+
+        return Game::fromArray($newGameData);
+    }
+
+    private function getNewBoardFromMove(Game $game, Move $move): Board
+    {
+        $newBoardStatus = $game->board->status;
+        $newBoardStatus[$move->boardCell->cellCoordinate - 1] = $move->player->value;
+
+        return Board::fromStatus($newBoardStatus);
     }
 }
