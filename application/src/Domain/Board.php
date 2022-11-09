@@ -40,6 +40,11 @@ final class Board
     ) {
     }
 
+    public function moveCanBeDoneInCell(BoardCell $boardCell): bool
+    {
+        return '0' === $this->status[$boardCell->cellCoordinate - 1];
+    }
+
     public static function default(): self
     {
         return new self(
@@ -54,6 +59,22 @@ final class Board
         }
 
         return new self($status);
+    }
+
+    public function isInWinningCondition(): bool
+    {
+        foreach (Board::WINNING_CONDITIONS as $winningCondition) {
+            if (1 === preg_match('/'.$winningCondition.'/', $this->status)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function isInStaleCondition(): bool
+    {
+        return 1 === preg_match('/[1-2]{9}/', $this->status) && !$this->isInWinningCondition();
     }
 
     private static function isValid(string $status): bool

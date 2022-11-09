@@ -45,23 +45,19 @@ class GameTest extends TestCase
         $this->assertEquals(Player::NONE, $game->winner);
     }
 
-    /** @dataProvider winnedGamesDataProvider */
-    public function test_if_game_has_a_won_board(string $board, bool $expectedWonStatus): void
+    /** @dataProvider winnedConditionsDataProvider */
+    public function test_if_game_has_a_won_board(string $boardStatus, bool $expectedWonStatus): void
     {
-        $data = [
-            'id' => Uuid::uuid4()->toString(),
-            'status' => GameStatus::OPEN->value,
-            'board' => $board,
-            'nextPlayer' => Player::ONE->value,
-            'winner' => Player::NONE->value,
-        ];
-
-        $game = Game::fromArray($data);
-
-        $this->assertSame($expectedWonStatus, $game->hasBeenWon());
+        $this->assertSame($expectedWonStatus, Board::fromStatus($boardStatus)->isInWinningCondition());
     }
 
-    public function winnedGamesDataProvider(): array
+    /** @dataProvider staleConditionsDataProvider */
+    public function test_if_game_has_a_stale_board(string $boardStatus, bool $expectedStaleStatus): void
+    {
+        $this->assertSame($expectedStaleStatus, Board::fromStatus($boardStatus)->isInStaleCondition());
+    }
+
+    public function winnedConditionsDataProvider(): array
     {
         return [
             [Board::default()->status, false],
@@ -73,6 +69,36 @@ class GameTest extends TestCase
             ['122212221', true],
             ['221212122', true],
             ['221202122', false],
+        ];
+    }
+
+    public function staleConditionsDataProvider(): array
+    {
+        return [
+            [Board::default()->status, false],
+            [Board::WINNING_CONDITIONS[0], false],
+            [Board::WINNING_CONDITIONS[1], false],
+            [Board::WINNING_CONDITIONS[2], false],
+            [Board::WINNING_CONDITIONS[3], false],
+            [Board::WINNING_CONDITIONS[4], false],
+            [Board::WINNING_CONDITIONS[5], false],
+            [Board::WINNING_CONDITIONS[6], false],
+            [Board::WINNING_CONDITIONS[7], false],
+            [Board::WINNING_CONDITIONS[8], false],
+            [Board::WINNING_CONDITIONS[9], false],
+            [Board::WINNING_CONDITIONS[10], false],
+            [Board::WINNING_CONDITIONS[11], false],
+            [Board::WINNING_CONDITIONS[12], false],
+            [Board::WINNING_CONDITIONS[13], false],
+            [Board::WINNING_CONDITIONS[14], false],
+            [Board::WINNING_CONDITIONS[15], false],
+            ['112221121', true],
+            ['111221112', false],
+            ['222112221', false],
+            ['122212221', false],
+            ['221212122', false],
+            ['221202122', false],
+            ['212211122', true],
         ];
     }
 }

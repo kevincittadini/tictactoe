@@ -5,10 +5,10 @@ namespace TicTacToe\Application\Command\Game;
 use TicTacToe\Application\Command\CommandHandler;
 use TicTacToe\Application\Repository\Write\GameRepository;
 
-class CreateGameHandler implements CommandHandler
+final class CreateGameHandler implements CommandHandler
 {
     public function __construct(
-        private GameRepository $gameRepository
+        private readonly GameRepository $gameRepository
     ) {
     }
 

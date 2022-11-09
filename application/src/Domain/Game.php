@@ -42,15 +42,4 @@ final class Game
             Player::NONE,
         );
     }
-
-    public function hasBeenWon(): bool
-    {
-        foreach (Board::WINNING_CONDITIONS as $winningCondition) {
-            if (1 === preg_match('/'.$winningCondition.'/', $this->board->status)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 }

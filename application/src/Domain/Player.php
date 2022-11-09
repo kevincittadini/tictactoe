@@ -10,4 +10,9 @@ enum Player: string
     case ONE = '1';
     case TWO = '2';
     case ANY = '.';
+
+    public function isValidPlayerToMove(): bool
+    {
+        return in_array($this->value, [self::ONE->value, self::TWO->value], true);
+    }
 }
