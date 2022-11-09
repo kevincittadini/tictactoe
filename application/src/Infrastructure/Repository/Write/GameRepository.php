@@ -9,6 +9,7 @@ use TicTacToe\Application\Entity\Game;
 use TicTacToe\Application\Repository\Write\GameRepository as WriteGameRepository;
 use TicTacToe\Domain\Game as GameDTO;
 
+/** @psalm-suppress UndefinedInterfaceMethod */
 final class GameRepository implements WriteGameRepository
 {
     public function __construct(
