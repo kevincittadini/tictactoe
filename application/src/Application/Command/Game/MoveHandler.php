@@ -6,6 +6,7 @@ namespace TicTacToe\Application\Command\Game;
 
 use TicTacToe\Application\Command\CommandHandler;
 use TicTacToe\Application\Repository\Read\GameRepository as ReadGameRepository;
+use TicTacToe\Domain\Game;
 use TicTacToe\Domain\GameStatus;
 
 final class MoveHandler implements CommandHandler
@@ -15,7 +16,7 @@ final class MoveHandler implements CommandHandler
     ) {
     }
 
-    public function __invoke(Move $move): void
+    public function __invoke(Move $move): Game
     {
         $game = $this->readGameRepository->get($move->gameId);
 
@@ -38,5 +39,7 @@ final class MoveHandler implements CommandHandler
         if ($game->nextPlayer !== $move->player) {
             throw new \DomainException(sprintf('Player %s is the next to move.', $game->nextPlayer->value));
         }
+
+        return $game;
     }
 }
