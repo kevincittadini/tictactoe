@@ -21,6 +21,7 @@ final class GameRepository implements WriteGameRepository
         $gameEntity = new Game();
         $gameEntity->setId($game->id->toString());
         $gameEntity->setBoard($game->board->status);
+        $gameEntity->setStatus($game->status->value);
         $gameEntity->setNextPlayer($game->nextPlayer->value);
         $gameEntity->setWinner($game->winner->value);
 

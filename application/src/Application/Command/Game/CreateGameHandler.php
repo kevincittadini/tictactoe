@@ -8,12 +8,12 @@ use TicTacToe\Application\Repository\Write\GameRepository;
 final class CreateGameHandler implements CommandHandler
 {
     public function __construct(
-        private readonly GameRepository $gameRepository
+        private readonly GameRepository $writeGameRepository
     ) {
     }
 
     public function __invoke(CreateGame $command): void
     {
-        $this->gameRepository->store($command->game);
+        $this->writeGameRepository->store($command->game);
     }
 }
