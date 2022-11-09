@@ -6,6 +6,7 @@ namespace TicTacToe\Application\Command\Game;
 
 use TicTacToe\Application\Command\CommandHandler;
 use TicTacToe\Application\Repository\Read\GameRepository as ReadGameRepository;
+use TicTacToe\Domain\GameStatus;
 
 final class MoveHandler implements CommandHandler
 {
@@ -20,6 +21,10 @@ final class MoveHandler implements CommandHandler
 
         if (!$game) {
             throw new \DomainException('Game not found.');
+        }
+
+        if ($game->status === GameStatus::CLOSE) {
+            throw new \DomainException("Game is closed.");
         }
 
         if (!$move->player->isMoveValid()) {
