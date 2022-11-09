@@ -6,6 +6,7 @@ namespace TicTacToe\Application\Command\Game;
 
 use TicTacToe\Application\Command\CommandHandler;
 use TicTacToe\Application\Repository\Read\GameRepository as ReadGameRepository;
+use TicTacToe\Application\Repository\Write\GameRepository as WriteGameRepository;
 use TicTacToe\Domain\Game;
 use TicTacToe\Domain\GameStatus;
 
@@ -13,6 +14,7 @@ final class MoveHandler implements CommandHandler
 {
     public function __construct(
         private readonly ReadGameRepository $readGameRepository,
+        private readonly WriteGameRepository $writeGameRepository,
     ) {
     }
 
@@ -40,6 +42,14 @@ final class MoveHandler implements CommandHandler
             throw new \DomainException(sprintf('Player %s is the next to move.', $game->nextPlayer->value));
         }
 
+//        $newGameState = [
+//            'id' => $game->id->toString(),
+//            'status' =>
+//        ];
+//
+//        $newGameInstance = Game::fromArray($newGameState);
+//
+//        return $newGameInstance;
         return $game;
     }
 }

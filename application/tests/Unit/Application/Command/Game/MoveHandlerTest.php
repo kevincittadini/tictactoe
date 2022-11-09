@@ -10,6 +10,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 use TicTacToe\Application\Command\Game\Move;
 use TicTacToe\Application\Command\Game\MoveHandler;
 use TicTacToe\Application\Repository\Read\GameRepository as ReadGameRepository;
+use TicTacToe\Application\Repository\Write\GameRepository as WriteGameRepository;
 use TicTacToe\Domain\Board;
 use TicTacToe\Domain\BoardCell;
 use TicTacToe\Domain\Game;
@@ -26,6 +27,7 @@ class MoveHandlerTest extends TestCase
     private BoardCell $boardCell;
     private Player $player;
     private ObjectProphecy $readRepository;
+    private ObjectProphecy $writeRepository;
 
     protected function setUp(): void
     {
@@ -44,6 +46,7 @@ class MoveHandlerTest extends TestCase
         $this->boardCell = BoardCell::withCoordinate(1);
 
         $this->readRepository = $this->prophesize(ReadGameRepository::class);
+        $this->writeRepository = $this->prophesize(WriteGameRepository::class);
     }
 
     public function test_it_throws_exception_if_game_is_not_found(): void
@@ -53,7 +56,7 @@ class MoveHandlerTest extends TestCase
 
         $this->readRepository->get($this->gameId)->willReturn(null)->shouldBeCalled();
 
-        $handler = new MoveHandler($this->readRepository->reveal());
+        $handler = new MoveHandler($this->readRepository->reveal(), $this->writeRepository->reveal());
 
         $handler(new Move(
             $this->gameId,
@@ -78,7 +81,7 @@ class MoveHandlerTest extends TestCase
 
         $this->readRepository->get($gameId)->willReturn($game)->shouldBeCalled();
 
-        $handler = new MoveHandler($this->readRepository->reveal());
+        $handler = new MoveHandler($this->readRepository->reveal(), $this->writeRepository->reveal());
 
         $handler(new Move(
             $gameId,
@@ -103,7 +106,7 @@ class MoveHandlerTest extends TestCase
 
         $this->readRepository->get($gameId)->willReturn($game)->shouldBeCalled();
 
-        $handler = new MoveHandler($this->readRepository->reveal());
+        $handler = new MoveHandler($this->readRepository->reveal(), $this->writeRepository->reveal());
 
         $handler(new Move(
             $gameId,
@@ -119,7 +122,7 @@ class MoveHandlerTest extends TestCase
 
         $this->readRepository->get($this->gameId)->willReturn($this->game)->shouldBeCalled();
 
-        $handler = new MoveHandler($this->readRepository->reveal());
+        $handler = new MoveHandler($this->readRepository->reveal(), $this->writeRepository->reveal());
 
         $handler(new Move(
             $this->gameId,
@@ -135,7 +138,7 @@ class MoveHandlerTest extends TestCase
 
         $this->readRepository->get($this->gameId)->willReturn($this->game)->shouldBeCalled();
 
-        $handler = new MoveHandler($this->readRepository->reveal());
+        $handler = new MoveHandler($this->readRepository->reveal(), $this->writeRepository->reveal());
 
         $handler(new Move(
             $this->gameId,
@@ -147,7 +150,7 @@ class MoveHandlerTest extends TestCase
     public function test_it_handles_game_move(): void
     {
         $this->readRepository->get($this->gameId)->willReturn($this->game)->shouldBeCalled();
-        $handler = new MoveHandler($this->readRepository->reveal());
+        $handler = new MoveHandler($this->readRepository->reveal(), $this->writeRepository->reveal());
 
         $handler(new Move(
             $this->gameId,
