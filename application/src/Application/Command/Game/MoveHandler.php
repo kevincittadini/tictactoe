@@ -27,7 +27,11 @@ final class MoveHandler implements CommandHandler
             throw new \DomainException("Game is closed.");
         }
 
-        if (!$move->player->isMoveValid()) {
+        if (!$game->board->moveCanBeDoneInCell($move->boardCell)) {
+            throw new \DomainException("Selected move cannot be performed because the cell is not empty.");
+        }
+
+        if (!$move->player->isValidPlayerToMove()) {
             throw new \DomainException('Player not valid.');
         }
 

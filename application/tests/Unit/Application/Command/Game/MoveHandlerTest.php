@@ -87,6 +87,31 @@ class MoveHandlerTest extends TestCase
         ));
     }
 
+    public function test_it_throws_exception_if_move_is_done_on_filled_cell(): void
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage("Selected move cannot be performed because the cell is not empty.");
+
+        $gameId = new Id(2);
+        $game = Game::fromArray([
+            'id' => $gameId->toString(),
+            'status' => GameStatus::OPEN->value,
+            'board' => Board::fromStatus('200000000')->status,
+            'nextPlayer' => Player::ONE->value,
+            'winner' => Player::NONE->value,
+        ]);
+
+        $this->readRepository->get($gameId)->willReturn($game)->shouldBeCalled();
+
+        $handler = new MoveHandler($this->readRepository->reveal());
+
+        $handler(new Move(
+            $gameId,
+            Player::NONE,
+            $this->boardCell
+        ));
+    }
+
     public function test_it_throws_exception_if_player_is_not_valid(): void
     {
         $this->expectException(\DomainException::class);
