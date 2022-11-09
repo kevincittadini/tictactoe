@@ -47,13 +47,17 @@ final class MoveHandler implements CommandHandler
             throw new \DomainException(sprintf('Player %s is the next to move.', $game->nextPlayer->value));
         }
 
-        $gameData = $this->doMove($game, $move);
+        $newGameData = $this->gameDataAfterMove($game, $move);
 
-        return Game::fromArray($gameData);
+        $newGame = Game::fromArray($newGameData);
+
+        $this->writeGameRepository->store($newGame);
+
+        return $newGame;
     }
 
     /** @return GameArray */
-    private function doMove(Game $game, Move $move): array
+    private function gameDataAfterMove(Game $game, Move $move): array
     {
         $newBoard = $this->getNewBoardFromMove($game, $move);
         $newGameStatus = $newBoard->isInWinningCondition() || $newBoard->isInStaleCondition() ? GameStatus::CLOSE : GameStatus::OPEN;
