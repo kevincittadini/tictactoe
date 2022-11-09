@@ -30,3 +30,6 @@ services:
 
     TicTacToe\Application\Command\Game\CreateGameHandler:
         public: true
+
+    TicTacToe\Application\Command\Game\MoveHandler:
+        public: true

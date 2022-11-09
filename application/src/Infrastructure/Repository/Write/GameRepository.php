@@ -25,7 +25,7 @@ final class GameRepository implements WriteGameRepository
         $gameEntity->setNextPlayer($game->nextPlayer->value);
         $gameEntity->setWinner($game->winner->value);
 
-        $this->em->persist($gameEntity);
+        $this->em->merge($gameEntity);
         $this->em->flush();
     }
 }

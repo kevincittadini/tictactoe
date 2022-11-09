@@ -8,6 +8,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use TicTacToe\Application\Command\Command;
 use TicTacToe\Application\Command\Game\CreateGame;
 use TicTacToe\Application\Command\Game\CreateGameHandler;
+use TicTacToe\Application\Command\Game\Move;
+use TicTacToe\Application\Command\Game\MoveHandler;
 
 final class CommandHandlerManager implements CommandHandlerManagerInterface
 {
@@ -17,19 +19,22 @@ final class CommandHandlerManager implements CommandHandlerManagerInterface
         private readonly ContainerInterface $container
     ) {
         $this->classesMap = [
-            CreateGame::class => [CreateGameHandler::class],
+            CreateGame::class => CreateGameHandler::class,
+            Move::class => MoveHandler::class,
         ];
     }
 
-    public function handle(Command $command): void
+    public function handle(Command $command): mixed
     {
         if (isset($this->classesMap[get_class($command)])) {
-            foreach ($this->classesMap[get_class($command)] as $handlerClass) {
-                $handler = $this->container->get($handlerClass);
-                if (is_callable($handler)) {
-                    $handler($command);
-                }
+            $handlerClass = $this->classesMap[get_class($command)];
+            $handler = $this->container->get($handlerClass);
+
+            if (is_callable($handler)) {
+                return $handler($command);
             }
         }
+
+        return null;
     }
 }
