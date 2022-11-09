@@ -6,6 +6,7 @@ namespace TicTacToe\Tests\Unit\Domain;
 
 use PHPUnit\Framework\TestCase;
 use TicTacToe\Domain\Board;
+use TicTacToe\Domain\BoardCell;
 
 class BoardTest extends TestCase
 {
@@ -24,6 +25,22 @@ class BoardTest extends TestCase
         Board::fromStatus($boardStatus);
     }
 
+    /** @dataProvider cellsDataProvider */
+    public function test_that_a_move_can_be_performed_on_empty_cells(int $coordinate): void
+    {
+        $board = Board::default();
+        $boardCell = BoardCell::withCoordinate($coordinate);
+        $this->assertTrue($board->moveCanBeDoneInCell($boardCell));
+    }
+
+    /** @dataProvider cellsDataProvider */
+    public function test_that_a_move_can_not_be_performed_on_filled_cells(int $coordinate): void
+    {
+        $board = Board::fromStatus('100020001');
+        $boardCell = BoardCell::withCoordinate($coordinate);
+        $this->assertFalse($board->moveCanBeDoneInCell($boardCell));
+    }
+
     public function validBoardStatusesDataProvider(): array
     {
         return [
@@ -39,6 +56,15 @@ class BoardTest extends TestCase
             ['00000000'],
             ['000000123'],
             ['ciao']
+        ];
+    }
+
+    public function cellsDataProvider(): array
+    {
+        return [
+            [1],
+            [5],
+            [9],
         ];
     }
 }

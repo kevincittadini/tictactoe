@@ -40,6 +40,11 @@ final class Board
     ) {
     }
 
+    public function moveCanBeDoneInCell(BoardCell $boardCell): bool
+    {
+        return $this->status[$boardCell->cellCoordinate - 1] === '0';
+    }
+
     public static function default(): self
     {
         return new self(
